@@ -45,9 +45,14 @@ public class UserService {
 	}
 	
 	public User update(Long id, User obj) {
-		User entity = repository.getOne(id);
-		updateData(entity, obj);
-		return repository.save(entity);
+		try {
+			User entity = repository.getOne(id);
+			updateData(entity, obj);
+			return repository.save(entity);
+		} catch (Exception e) {
+			throw new ResourceNotFoundException(id);
+		}
+		
 	}
 
 	private void updateData(User entity, User obj) {
