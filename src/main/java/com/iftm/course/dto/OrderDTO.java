@@ -93,7 +93,7 @@ public class OrderDTO implements Serializable {
 	
 	public Order toEntity() {
 		User client = new User(clientId, clientName, clientEmail, null, null);
-		return new Order(id, moment, orderStatus, client);
+		return new Order(id, moment, client, orderStatus);
 	}
 	
 
