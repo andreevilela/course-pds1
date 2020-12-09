@@ -49,14 +49,6 @@ public class ProductService {
 		entity =  repository.save(entity);
 		return new ProductDTO(entity);
 	}
-	
-	private void setProductCategories(Product entity, List<CategoryDTO> categories) {
-		entity.getCategories().clear();
-		for (CategoryDTO dto : categories) {
-			Category category = categoryRepository.getOne(dto.getId());
-			entity.getCategories().add(category);
-		}
-	}
 
 	public void delete(Long id) {
 		try {
@@ -69,8 +61,9 @@ public class ProductService {
 		
 	}
 	
+	
 	@Transactional
-	public ProductDTO update(Long id, ProductDTO dto) {
+	public ProductDTO update(Long id, ProductCategoriesDTO dto) {
 		try {
 			Product entity = repository.getOne(id);
 			updateData(entity, dto);
@@ -81,12 +74,23 @@ public class ProductService {
 		}
 		
 	}
+	
+	private void setProductCategories(Product entity, List<CategoryDTO> categories) {
+		entity.getCategories().clear();
+		for (CategoryDTO dto : categories) {
+			Category category = categoryRepository.getOne(dto.getId());
+			entity.getCategories().add(category);
+		}
+	}
 
-	private void updateData(Product entity, ProductDTO dto) {
+	private void updateData(Product entity, ProductCategoriesDTO dto) {
 		entity.setName(dto.getName());
 		entity.setDescription(dto.getDescription());
 		entity.setPrice(dto.getPrice());
 		entity.setImgURL(dto.getImgURL());
+		if (dto.getCategories() != null && dto.getCategories().size() > 0) {
+			setProductCategories(entity, dto.getCategories());
+		}
 	}
 
 }
