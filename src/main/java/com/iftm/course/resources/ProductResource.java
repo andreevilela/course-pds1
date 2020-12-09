@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.iftm.course.dto.ProductCategoriesDTO;
 import com.iftm.course.dto.ProductDTO;
 import com.iftm.course.services.ProductService;
 
@@ -38,7 +39,7 @@ public class ProductResource {
 	}
 	
 	@PostMapping
-	public ResponseEntity<ProductDTO> insert(@RequestBody ProductDTO dto) {
+	public ResponseEntity<ProductDTO> insert(@RequestBody ProductCategoriesDTO dto) {
 		ProductDTO newDto = service.insert(dto);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(newDto.getId()).toUri();
 		return ResponseEntity.created(uri).body(newDto);
