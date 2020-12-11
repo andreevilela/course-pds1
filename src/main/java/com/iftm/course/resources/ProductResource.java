@@ -45,6 +45,8 @@ public class ProductResource {
 		return ResponseEntity.created(uri).body(newDto);
 	}
 	
+	//JÁ HAVIA FEITO
+	
 	@DeleteMapping(value = "/{id}")
 	public ResponseEntity<Void> delete(@PathVariable Long id) {
 		service.delete(id);
