@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Positive;
 
 import org.hibernate.validator.constraints.Length;
 
@@ -20,9 +21,9 @@ public class ProductCategoriesDTO implements Serializable {
 	
 	@NotEmpty(message = "can't be empty")
 	@Length(min = 8, message = "Length must be between 5 and 80")
-	
-	
 	private String description;
+	
+	@Positive
 	private Double price;
 	private String imgURL;
 	
