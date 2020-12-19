@@ -1,6 +1,7 @@
 package com.iftm.course.entities;
 
 import java.io.Serializable;
+import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -9,6 +10,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 
 
@@ -25,6 +28,9 @@ public class Category implements Serializable {
 	
 	@ManyToMany(mappedBy = "categories")
 	private Set<Product> products = new HashSet<>();
+	
+	private Instant createdAt;
+	private Instant updatedAt;
 	
 	public Category() {
 	}
@@ -58,6 +64,27 @@ public class Category implements Serializable {
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
+	
+	public Instant getCreatedAt() {
+		return createdAt;
+	}
+
+	public Instant getUpdatedAt() {
+		return updatedAt;
+	}
+	
+	@PreUpdate
+	public void preUpdate() {
+		updatedAt = Instant.now();
+	}
+	
+	@PrePersist
+	public void prePresist() {
+		Instant now = Instant.now();
+		updatedAt = now;
+		createdAt = now;
+	}
+	
 
 	@Override
 	public boolean equals(Object obj) {
@@ -75,7 +102,5 @@ public class Category implements Serializable {
 			return false;
 		return true;
 	}
-	
-	
 
 }
